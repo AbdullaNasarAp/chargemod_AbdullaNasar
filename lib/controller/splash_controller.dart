@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:abdulla_nasar/view/auth/login.dart';
 import 'package:abdulla_nasar/view/home.dart';
+import 'package:abdulla_nasar/view/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -34,7 +33,7 @@ class SplashController with ChangeNotifier {
         (value) => Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPage(),
+            builder: (context) => const Onboarding(),
           ),
           (route) => false,
         ),

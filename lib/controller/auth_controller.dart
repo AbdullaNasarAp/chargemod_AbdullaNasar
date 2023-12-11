@@ -138,6 +138,15 @@ class AuthController with ChangeNotifier {
     }
   }
 
+  String _selectedCountryCode = "+91";
+
+  String get selectedCountryCode => _selectedCountryCode;
+
+  void setSelectedCountryCode(String countryCode) {
+    _selectedCountryCode = countryCode;
+    notifyListeners();
+  }
+
   // Future<void> logout(BuildContext context) async {
   //   final refreshToken1 = await secureStorage.read(key: 'refreshToken');
   //   log(refreshToken1.toString());
