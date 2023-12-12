@@ -1,4 +1,0 @@
-enum OtpScreenEnum {
-  forgotOtpScreen,
-  signUpOtpScreen,
-}

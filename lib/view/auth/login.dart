@@ -3,6 +3,7 @@ import 'package:abdulla_nasar/utils/hex_colors.dart';
 import 'package:abdulla_nasar/utils/reusable_widget.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -72,8 +73,12 @@ class LoginPage extends StatelessWidget {
                           kWidth(20),
                           Expanded(
                             child: TextFormField(
-                              controller: authCtrl.phoneNumberController,
                               keyboardType: TextInputType.phone,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]')),
+                              ],
+                              controller: authCtrl.phoneNumberController,
                               decoration: InputDecoration(
                                 prefixIcon:
                                     Image.asset("assets/images/call.png"),
@@ -119,29 +124,27 @@ class LoginPage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Second Column (RichText at the end)
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: '       By continuing you agree to our\n',
-                      style:
-                          TextStyle(fontFamily: "Poppins", color: Colors.black),
+                      style: const TextStyle(
+                          fontFamily: "Poppins", color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Terms & Conditions',
                           style: TextStyle(
-                              color: Colors.orange, fontFamily: "Poppins"),
+                              color: HexColor("E6740C"), fontFamily: "Poppins"),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: ' and ',
                           style: TextStyle(fontFamily: "Poppins"),
                         ),
                         TextSpan(
                           text: 'Privacy Policy',
                           style: TextStyle(
-                              color: Colors.orange, fontFamily: "Poppins"),
+                              color: HexColor("E6740C"), fontFamily: "Poppins"),
                         ),
                       ],
                     ),

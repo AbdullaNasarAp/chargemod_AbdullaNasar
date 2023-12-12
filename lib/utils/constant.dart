@@ -10,6 +10,7 @@ class Urls {
   static const String refreshToken = "/refresh";
   static const String resend = "/resend";
   static const String logout = "/logout";
+  static const String registerUser = "/register";
 }
 
 class ApiQueryParameter {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:abdulla_nasar/view/home.dart';
+import 'package:abdulla_nasar/utils/interceptor.dart';
+import 'package:abdulla_nasar/view/bottum_nav.dart';
 import 'package:abdulla_nasar/view/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -9,6 +10,7 @@ class SplashController with ChangeNotifier {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   String? signInstate;
   void checkLogin(BuildContext context) async {
+    Interceptorapi().getApiUser();
     await Future.delayed(
       const Duration(seconds: 3),
     );
@@ -21,7 +23,7 @@ class SplashController with ChangeNotifier {
         (value) => Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const BottumNavBar(),
           ),
           (route) => false,
         ),
