@@ -1,8 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 import 'package:abdulla_nasar/utils/constant.dart';
 import 'package:abdulla_nasar/utils/interceptor.dart';
 import 'package:abdulla_nasar/view/auth/login.dart';
-import 'package:abdulla_nasar/view/home/home.dart';
+import 'package:abdulla_nasar/view/bottum_nav.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -23,6 +25,8 @@ class UserProfileController with ChangeNotifier {
   }
 
   Future<void> registerUser(BuildContext context, String phoneNumber) async {
+    Dio dios = await Interceptorapi().getApiUser();
+
     if (firstNameController.text.isEmpty ||
         lastNameController.text.isEmpty ||
         emailController.text.isEmpty) {
@@ -32,7 +36,7 @@ class UserProfileController with ChangeNotifier {
     const String url = Urls.baseUrl + Urls.registerUser;
 
     try {
-      final response = await dio.post(
+      final response = await dios.post(
         url,
         data: {
           "mobile": phoneNumber,
@@ -45,12 +49,15 @@ class UserProfileController with ChangeNotifier {
       if (response.statusCode == 200) {
         log(response.data.toString());
 
-        Interceptorapi().getApiUser();
+        final Map<String, dynamic> responseData = response.data;
+        final String firstName = responseData['firstName'];
+        await secureStorage.write(key: 'firstName', value: firstName);
+        log("firstName :: $firstName");
         Future.delayed(const Duration(milliseconds: 200)).then(
           (value) => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const BottumNavBar(),
               ),
               (route) => false),
         );
@@ -60,6 +67,7 @@ class UserProfileController with ChangeNotifier {
     } catch (error) {
       log('Error: $error');
     }
+    notifyListeners();
   }
 
   Future<void> logout(BuildContext context) async {

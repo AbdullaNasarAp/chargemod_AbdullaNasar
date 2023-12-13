@@ -3,11 +3,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:abdulla_nasar/controller/profile_controller.dart';
+import 'package:abdulla_nasar/model/get_user_model.dart';
 import 'package:abdulla_nasar/utils/app_toast.dart';
 import 'package:abdulla_nasar/utils/constant.dart';
 import 'package:abdulla_nasar/utils/hex_colors.dart';
 import 'package:abdulla_nasar/view/auth/otp.dart';
 import 'package:abdulla_nasar/view/auth/user_profile.dart';
+import 'package:abdulla_nasar/view/bottum_nav.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -101,14 +104,31 @@ class AuthController with ChangeNotifier {
 
         log("accessToken ::: $accessToken");
 
-        Future.delayed(const Duration(milliseconds: 200)).then(
-          (value) => Navigator.pushAndRemoveUntil(
+        User? existingUser = await ProfileController().fetchData();
+
+        if (existingUser != null && existingUser.mobile == phoneNumber) {
+          Future.delayed(
+            const Duration(milliseconds: 200),
+          ).then(
+            (value) => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => UserProfilePage(phoneNumber: phoneNumber),
+                builder: (context) => const BottumNavBar(),
               ),
-              (route) => false),
-        );
+              (route) => false,
+            ),
+          );
+        } else {
+          Future.delayed(const Duration(milliseconds: 200)).then(
+            (value) => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      UserProfilePage(phoneNumber: phoneNumber),
+                ),
+                (route) => false),
+          );
+        }
       } else {
         print('OTP verification failed: ${response.reasonPhrase}');
         AppToast.showToast("Invalid OTP", errorColor);
@@ -150,13 +170,6 @@ class AuthController with ChangeNotifier {
     notifyListeners();
   }
 
-  // String? phone;
-
-  // void readStorage() async {
-  //   phone = await secureStorage.read(key: "phoneNumber");
-  //   notifyListeners();
-  // }
-
   Future<void> resendOtp() async {
     Dio dio = Dio();
     var url = Urls.baseUrl + Urls.resend;
@@ -164,9 +177,6 @@ class AuthController with ChangeNotifier {
     try {
       Response response = await dio.post(
         url,
-        // options: Options(
-        //   headers: {'Content-Type': 'application/json'},
-        // ),
         data: {
           'mobile': phoneNumberController.text,
           'type': 'text',
@@ -174,8 +184,9 @@ class AuthController with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        print(response.data);
         resetTimer();
+        print(response.data);
+
         AppToast.showToast(
             "OTP successfully sent. Please check your mobile for the verification code.",
             kBlack);

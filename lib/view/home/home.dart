@@ -1,4 +1,3 @@
-import 'package:abdulla_nasar/utils/interceptor.dart';
 import 'package:abdulla_nasar/utils/reusable_widget.dart';
 import 'package:abdulla_nasar/view/home/charging_ports_card.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Interceptorapi().getApiUser();
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         height: double.infinity,
         width: double.infinity,

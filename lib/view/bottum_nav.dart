@@ -12,6 +12,7 @@ class BottumNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Consumer<BottomNavigationBarController>(
           builder: (context, bnbController, child) {
@@ -48,7 +49,7 @@ class BottumNavBar extends StatelessWidget {
                 topRight: Radius.circular(20.0),
               ),
               child: BottomNavigationBar(
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.white,
                 elevation: 0,
                 showUnselectedLabels: true,
                 unselectedItemColor: HexColor("666766"),

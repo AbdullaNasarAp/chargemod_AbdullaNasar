@@ -1,7 +1,9 @@
 import 'package:abdulla_nasar/controller/auth_controller.dart';
 import 'package:abdulla_nasar/controller/bottum_nav_controller.dart';
+import 'package:abdulla_nasar/controller/profile_controller.dart';
 import 'package:abdulla_nasar/controller/splash_controller.dart';
 import 'package:abdulla_nasar/controller/user_profile_controller.dart';
+import 'package:abdulla_nasar/utils/theme.dart';
 import 'package:abdulla_nasar/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +18,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -33,11 +41,17 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BottomNavigationBarController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileController(),
         )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.system,
+        home: const SplashScreen(),
       ),
     );
   }

@@ -18,12 +18,43 @@ class PageViewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    List<PageViewContentModel> pageViewContentList = [
+      PageViewContentModel(
+        text1: 'Charge your EV',
+        text2: 'At Your',
+        text3: 'Fingertips',
+        img: 'assets/images/scooterwithcharger.png',
+        subtitle: '       Scan Charge and Go\nEffortless Charging schemas',
+      ),
+      PageViewContentModel(
+        text1: 'Easy EV Navigation',
+        text2: 'Travel Route',
+        text3: 'For Electrics',
+        img: 'assets/images/location.png',
+        subtitle:
+            '       Grab The Best In Class\nDigital Experience Crafted For\n                    EV Drivers',
+      ),
+      PageViewContentModel(
+        text1: 'interaction with Grid',
+        text2: 'RealTime',
+        text3: 'Monitoring',
+        img: 'assets/images/charger.png',
+        subtitle:
+            '       Intelligent Sensible Devices\n                Ambicharge Series',
+      ),
+    ];
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/background.png"),
+          fit: BoxFit.cover,
+          image: AssetImage(
+            "assets/images/bg.png",
+          ),
         ),
       ),
       child: Padding(
@@ -40,15 +71,23 @@ class PageViewContent extends StatelessWidget {
                     ),
                     (route) => false);
               },
-              child: text(giveText: "SKIP", fontsize: 16),
+              child: text(
+                  giveText: "SKIP",
+                  fontsize: 16,
+                  textColor: theme.textTheme.bodySmall!.color!),
             ),
             Center(
               child: Column(
                 children: [
-                  text(giveText: data.text1, fontsize: 16),
+                  text(
+                    giveText: data.text1,
+                    fontsize: 16,
+                    textColor: theme.textTheme.bodyLarge!.color!,
+                  ),
                   text(
                       giveText: data.text2,
                       fontsize: 40,
+                      textColor: theme.textTheme.bodyLarge!.color!,
                       fontweight: FontWeight.w700),
                   text(
                     giveText: data.text3,
@@ -65,6 +104,7 @@ class PageViewContent extends StatelessWidget {
                     child: Image.asset(
                       data.img,
                       fit: BoxFit.cover,
+                      color: isDarkMode ? Colors.white : null,
                     ),
                   )
                 : Align(
@@ -76,7 +116,11 @@ class PageViewContent extends StatelessWidget {
                     ),
                   ),
             Center(
-              child: text(giveText: data.subtitle, fontsize: 15),
+              child: text(
+                giveText: data.subtitle,
+                fontsize: 15,
+                textColor: theme.textTheme.bodyLarge!.color!,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -107,13 +151,15 @@ class PageViewContent extends StatelessWidget {
                   child: SmoothPageIndicator(
                     controller: controller,
                     effect: WormEffect(
-                        dotHeight: 10,
-                        dotWidth: 10,
-                        strokeWidth: 10,
-                        paintStyle: PaintingStyle.fill,
-                        activeDotColor: HexColor("2E2E2D"),
-                        type: WormType.thin,
-                        dotColor: HexColor("666766")),
+                      dotHeight: 10,
+                      dotWidth: 10,
+                      strokeWidth: 10,
+                      paintStyle: PaintingStyle.fill,
+                      activeDotColor: theme.textTheme.bodyLarge!.color!,
+                      type: WormType.thin,
+                      dotColor:
+                          theme.textTheme.bodyLarge!.color!.withOpacity(0.5),
+                    ),
                     onDotClicked: (index) {
                       controller.nextPage(
                         duration: const Duration(milliseconds: 200),
@@ -156,29 +202,3 @@ class PageViewContent extends StatelessWidget {
     );
   }
 }
-
-List<PageViewContentModel> pageViewContentList = [
-  PageViewContentModel(
-    text1: 'Charge your EV',
-    text2: 'At Your',
-    text3: 'Fingertips',
-    img: 'assets/images/scooterwithcharger.png',
-    subtitle: '       Scan Charge and Go\nEffortless Charging schemas',
-  ),
-  PageViewContentModel(
-    text1: 'Easy EV Navigation',
-    text2: 'Travel Route',
-    text3: 'For Electrics',
-    img: 'assets/images/location.png',
-    subtitle:
-        '       Grab The Best In Class\nDigital Experience Crafted For\n                    EV Drivers',
-  ),
-  PageViewContentModel(
-    text1: 'interaction with Grid',
-    text2: 'RealTime',
-    text3: 'Monitoring',
-    img: 'assets/images/charger.png',
-    subtitle:
-        '       Intelligent Sensible Devices\n                Ambicharge Series',
-  ),
-];

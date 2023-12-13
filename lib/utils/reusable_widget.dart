@@ -92,6 +92,9 @@ class CustomFormField extends StatelessWidget {
           inputFormatters: inputFormatters,
           controller: controller,
           decoration: InputDecoration(
+            // fillColor: Theme.of(context).focusColor,
+            // focusColor: Theme.of(context).focusColor,
+            // filled: true,
             contentPadding: const EdgeInsets.all(5),
             hintText: hintText,
             hintStyle: textStyle(

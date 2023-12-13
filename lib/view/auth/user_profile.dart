@@ -13,7 +13,9 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: text(
             giveText: 'Update Profile',

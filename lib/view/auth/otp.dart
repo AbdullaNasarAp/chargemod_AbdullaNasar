@@ -1,60 +1,3 @@
-// import 'package:abdulla_nasar/controller/auth_controller.dart';
-// import 'package:abdulla_nasar/utils/reusable_widget.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:pinput/pinput.dart';
-// import 'package:provider/provider.dart';
-
-// class OtpPage extends StatelessWidget {
-//   final String phoneNumber;
-
-//   const OtpPage({Key? key, required this.phoneNumber}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('OTP Page'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Consumer<AuthController>(
-//           builder: (context, authProvider, child) {
-//             return Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Text('Enter OTP sent to $phoneNumber'),
-//                 kHeight(16),
-//                 TextField(
-//                   controller: authProvider.otpController,
-//                   keyboardType: TextInputType.number,
-//                   decoration: InputDecoration(labelText: 'OTP'),
-//                 ),
-//                 kHeight(16),
-//                 ElevatedButton(
-//                   onPressed: () async {
-//                     await authProvider.verifyOtp(phoneNumber, context);
-//                   },
-//                   child: Text('Verify OTP'),
-//                 ),
-//                 kHeight(16),
-//                 authProvider.timerSeconds > 0
-//                     ? Text('Resend OTP in ${authProvider.timerSeconds} seconds')
-//                     : ElevatedButton(
-//                         onPressed: () {
-//                           authProvider.resetTimer();
-//                         },
-//                         child: Text('Resend OTP'),
-//                       ),
-//               ],
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:abdulla_nasar/utils/hex_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,15 +13,22 @@ class OtpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: theme.scaffoldBackgroundColor,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
           ),
         ),
-        title: text(giveText: 'Verification', fontsize: 16),
+        title: text(
+            giveText: 'Verification',
+            fontsize: 16,
+            textColor: theme.textTheme.bodyLarge!.color!),
         centerTitle: true,
       ),
       body: Padding(
@@ -94,7 +44,8 @@ class OtpPage extends StatelessWidget {
                       kHeight(50),
                       text(
                           giveText:
-                              'We’ve send you the verification \n     code on +91 $phoneNumber'),
+                              'We’ve send you the verification \n     code on +91 $phoneNumber',
+                          textColor: theme.textTheme.bodyLarge!.color!),
                       kHeight(16),
                       Center(
                         child: Pinput(
@@ -104,24 +55,23 @@ class OtpPage extends StatelessWidget {
                           defaultPinTheme: PinTheme(
                               textStyle: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.bold),
-                              decoration: pinPutDecoration(),
+                              decoration: pinPutDecoration(context),
                               height: 60,
                               width: 60),
                           submittedPinTheme: PinTheme(
-                            decoration: pinPutDecoration(),
+                            decoration: pinPutDecoration(context),
                             height: 60,
                             width: 60,
                             textStyle: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           followingPinTheme: PinTheme(
-                            decoration: pinPutDecoration(),
+                            decoration: pinPutDecoration(context),
                             height: 60,
                             width: 60,
                             textStyle: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
-                          // keyboardType: TextInputType.number,
                           closeKeyboardWhenCompleted: true,
                           length: 4,
                           inputFormatters: <TextInputFormatter>[
@@ -135,8 +85,9 @@ class OtpPage extends StatelessWidget {
                           ? RichText(
                               text: TextSpan(
                                 text: 'Re-send code in ',
-                                style: const TextStyle(
-                                    fontFamily: "Poppins", color: Colors.black),
+                                style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    color: theme.textTheme.bodyLarge!.color!),
                                 children: <TextSpan>[
                                   TextSpan(
                                     text: '0.${authProvider.timerSeconds}',
@@ -188,8 +139,9 @@ class OtpPage extends StatelessWidget {
     );
   }
 
-  BoxDecoration pinPutDecoration() {
+  BoxDecoration pinPutDecoration(BuildContext ctx) {
     return BoxDecoration(
+      color: Theme.of(ctx).focusColor,
       border: Border.all(width: 2, color: HexColor("E4DFDF")),
       borderRadius: BorderRadius.circular(15.0),
     );

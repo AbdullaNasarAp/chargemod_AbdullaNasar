@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -22,11 +23,15 @@ class LoginPage extends StatelessWidget {
                   child: Column(
                     children: [
                       kHeight(150),
-                      text(giveText: "ChargeMOD", fontsize: 16),
+                      text(
+                        giveText: "ChargeMOD",
+                        fontsize: 16,
+                        textColor: theme.textTheme.bodyLarge!.color!,
+                      ),
                       text(
                           giveText: "Let’s Start",
                           fontsize: 40,
-                          textColor: HexColor("2E2E2D"),
+                          textColor: theme.textTheme.bodyLarge!.color!,
                           fontweight: FontWeight.w700),
                       text(
                           giveText: "From login",
@@ -52,6 +57,7 @@ class LoginPage extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
+                                color: theme.focusColor,
                                 border: Border.all(color: HexColor("E4DFDF")),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
@@ -65,7 +71,10 @@ class LoginPage extends StatelessWidget {
                                       width: 35,
                                     ),
                                   ),
-                                  const Icon(Icons.expand_more)
+                                  Icon(
+                                    Icons.expand_more,
+                                    color: theme.scaffoldBackgroundColor,
+                                  )
                                 ],
                               ),
                             ),
@@ -78,12 +87,20 @@ class LoginPage extends StatelessWidget {
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'[0-9]')),
                               ],
+                              style: textStyle(
+                                  textColor: theme.textTheme.bodyMedium!.color),
                               controller: authCtrl.phoneNumberController,
                               decoration: InputDecoration(
-                                prefixIcon:
-                                    Image.asset("assets/images/call.png"),
+                                fillColor: theme.focusColor,
+                                filled: true,
+                                prefixIcon: Image.asset(
+                                  "assets/images/call.png",
+                                ),
                                 contentPadding: const EdgeInsets.all(5),
-                                labelText: 'Phone Number',
+                                hintText: 'Phone Number',
+                                hintStyle: textStyle(
+                                    textColor:
+                                        theme.textTheme.bodyMedium!.color),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       width: 1, color: HexColor("E4DFDF")),
@@ -129,8 +146,9 @@ class LoginPage extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       text: '       By continuing you agree to our\n',
-                      style: const TextStyle(
-                          fontFamily: "Poppins", color: Colors.black),
+                      style: TextStyle(
+                          fontFamily: "Poppins",
+                          color: theme.textTheme.bodyLarge!.color),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Terms & Conditions',
